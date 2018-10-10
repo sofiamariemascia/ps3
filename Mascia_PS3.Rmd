@@ -1,0 +1,73 @@
+---
+title: "PS3"
+author: "Sofia Marie Mascia"
+date: "05/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(formattable)
+```
+
+##Question 1
+Consider these tables from the New York Times coverage of their polling in Maine. Replicate the information in the “Education” table except that, instead of providing the percentage, just show the raw number of responses in each bucket.
+```{r echo = FALSE}
+elections <-read_csv("elections-poll-me02-1.csv")
+
+elections1<-elections%>%
+  select(educ4,response)%>%
+ filter(educ4 != "[DO NOT READ] Don't know/Refused")%>%
+  count(educ4, response) %>% 
+  spread(key=response,value=n) %>% 
+  mutate(educ4 = str_replace(educ4, "High School Grad. or Less", "H.S. Grad or Less"),
+       educ4 = str_replace(educ4, "Postgraduate Degree", "Post-grad.")) %>% 
+  arrange(c("Post-grad.","4-year College Grad.","Some College Educ.", "H.S. Grad. or Less" ))
+elections1
+
+kable(elections1, 
+      col.names = c("", "DEM.", "REP.", "UND."), caption = "Education") 
+
+````
+
+##Question 2
+Replicate the percentages in the “Race and education” table. The trick is that the Times (correctly?) usesfinal_weight to weight the calculation.
+
+*The NYT assigns likelyhood that someone is going to vote, to the percentage of responses and thus you can't calculate the percentages based on the numeric totals.*
+```{r echo = FALSE}
+elections2 <- elections %>%
+  select(race_edu, response, final_weight)%>%
+  filter(race_edu != "[DO NOT READ] Don't know/Refused")%>%
+  group_by(response, race_edu) %>% 
+  mutate(weighted_count = sum(final_weight)) %>% 
+  distinct(weighted_count, .keep_all = TRUE) %>% 
+    select(race_edu, response, weighted_count) %>% 
+    spread(key = response, value = weighted_count) %>% 
+    mutate(total_weighted = Dem + Rep + Und, 
+           Dem = 100*Dem/total_weighted,
+           Rep = 100*Rep/total_weighted, 
+           Und = 100*Und/total_weighted) %>% 
+    select(race_edu, Dem, Rep, Und)
+       
+kable(elections1, digits = round (1),
+      col.names = c("", "DEM.", "REP.", "UND."), caption = "Education")   
+````
+
+##Question 3
+Make a violin plot which shows the relationship between education and the poll weighting (i.e., final_weight) which The Times places on a respondent when calculating the current state of the race. 
+
+```{r echo = FALSE}
+elections %>% 
+  filter(educ4 != "[DO NOT READ] Don't know/Refused") %>% 
+  arrange(educ4 == c("Postgraduate Degree", "4-year College Grad.", "Some College Educ.", "High School Grad. or Less")) %>% 
+  ggplot(aes(x = educ4, y = final_weight)) +
+  geom_violin() +
+  xlab("Educational Attainment") +
+  ylab("Poll Weight")+
+  ggtitle("Polling Weights by Educational Attainment")
+````
+
+### Collaborators Include Ghada Amer and Cayanne Chachati
+
