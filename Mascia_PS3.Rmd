@@ -52,7 +52,7 @@ elections2 <- elections %>%
     select(race_edu, Dem, Rep, Und)
        
 kable(elections1, digits = round (1),
-      col.names = c("", "DEM.", "REP.", "UND."), caption = "Education")   
+      col.names = c("", "DEM.", "REP.", "UND."), caption = "Race and Education Weighted by Likelyhood to Vote")   
 ````
 
 ##Question 3
@@ -69,5 +69,5 @@ elections %>%
   ggtitle("Polling Weights by Educational Attainment")
 ````
 
-### Collaborators Include Ghada Amer and Cayanne Chachati
+Collaborators: Ghada Amer('20) and Cayanne Chachati('20)
 
