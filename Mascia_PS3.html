@@ -132,6 +132,16 @@ $(document).ready(function () {
 <div id="question-1" class="section level2">
 <h2>Question 1</h2>
 <p>Consider these tables from the New York Times coverage of their polling in Maine. Replicate the information in the “Education” table except that, instead of providing the percentage, just show the raw number of responses in each bucket.</p>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   turnout_scale = col_double(),
+##   turnout_score = col_double(),
+##   w_LV = col_double(),
+##   w_RV = col_double(),
+##   final_weight = col_double()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre><code>## # A tibble: 4 x 4
 ##   educ4                  Dem   Rep   Und
 ##   &lt;chr&gt;                &lt;int&gt; &lt;int&gt; &lt;int&gt;
@@ -193,28 +203,22 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td>H.S. Grad or Less</td>
-<td align="right">53</td>
-<td align="right">58</td>
-<td align="right">21</td>
+<td>Nonwhite</td>
+<td align="right">38.8</td>
+<td align="right">55.0</td>
+<td align="right">6.2</td>
 </tr>
 <tr class="even">
-<td>Some College Educ.</td>
-<td align="right">61</td>
-<td align="right">84</td>
-<td align="right">19</td>
+<td>White, 4-Year College Grads</td>
+<td align="right">50.9</td>
+<td align="right">42.1</td>
+<td align="right">7.0</td>
 </tr>
 <tr class="odd">
-<td>4-year College Grad.</td>
-<td align="right">59</td>
-<td align="right">55</td>
-<td align="right">10</td>
-</tr>
-<tr class="even">
-<td>Post-grad.</td>
-<td align="right">51</td>
-<td align="right">24</td>
-<td align="right">7</td>
+<td>White, No 4-Year College Degree</td>
+<td align="right">37.8</td>
+<td align="right">49.5</td>
+<td align="right">12.7</td>
 </tr>
 </tbody>
 </table>

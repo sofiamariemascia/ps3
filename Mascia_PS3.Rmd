@@ -51,7 +51,7 @@ elections2 <- elections %>%
            Und = 100*Und/total_weighted) %>% 
     select(race_edu, Dem, Rep, Und)
        
-kable(elections1, digits = round (1),
+kable(elections2, digits = round (1),
       col.names = c("", "DEM.", "REP.", "UND."), caption = "Race and Education Weighted by Likelyhood to Vote")   
 ````
 
